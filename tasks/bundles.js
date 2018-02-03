@@ -38,6 +38,13 @@ const configurePlugins = (opts = {}) => {
     }),
 
     new webpack.optimize.ModuleConcatenationPlugin(),
+
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV':
+        JSON.stringify(process.env.NODE_ENV || 'production'),
+      'typeof self': JSON.stringify('object'),
+      'typeof window': JSON.stringify('object'),
+    }),
   ];
 
   if (process.env.NODE_ENV == 'production') {
