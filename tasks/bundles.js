@@ -93,6 +93,12 @@ const baseConfig = {
   },
   cache: {},
   devtool: '#source-map',
+  resolve: {
+    alias: {
+      actioncable:
+        '@rmacklin/actioncable',
+    },
+  },
 };
 
 const modernConfig = Object.assign({}, baseConfig, {
