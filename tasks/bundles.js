@@ -89,7 +89,7 @@ const baseConfig = {
   resolve: {
     alias: {
       actioncable:
-        'actioncable-with-source-code',
+        'actioncable-with-source-code/src',
     },
   },
 };
