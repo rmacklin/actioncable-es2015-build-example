@@ -86,6 +86,12 @@ const baseConfig = {
   },
   cache: {},
   devtool: '#source-map',
+  resolve: {
+    alias: {
+      actioncable:
+        'actioncable-with-source-code',
+    },
+  },
 };
 
 const modernConfig = Object.assign({}, baseConfig, {
