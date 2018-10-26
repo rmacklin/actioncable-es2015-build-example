@@ -1,39 +1,32 @@
-# Webpack ESNext Boilerplate
+Switching this app from depending on the CoffeeScript-compiled code of
+[actioncable v5.2.1] to the ES2015-compiled code of [rails/rails#34177] shrinks
+this app's javascript bundle from `10.6K` to `10.1K`.
 
-Webpack configuration and build scripts to deploy ES2015+ code to production (via `<script type="module">`) with legacy browser fallback support via `<script nomodule>`.
+To verify this result:
 
-This boilerplate is an implementation of the techniques described in my article: [Deploying ES2015+ Code in Production Today](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/).
+1. Clone the repository:
+   ```sh
+   git clone git@github.com:rmacklin/actioncable-es2015-build-example.git
+   cd actioncable-es2015-build-example
+   ```
 
-## Usage
+2. Check out the commit which uses the existing actioncable package and build
+   the app:
+   ```sh
+   git checkout d3706b043ef02bb577aa4fbb74377334d9d075e7
+   npm install
+   NODE_ENV=production npm run build
+   ```
+   The compiled bundle (`public/main-5b2c79757f.js`) is 10877 bytes.
 
-To view site locally, run the following command:
+3. Check out the commit which uses actioncable from [rails/rails#34177] and
+   build the app:
+   ```sh
+   git checkout b3a4eaa582eccb11273f1cf77c72bf64ad441dbe
+   npm install
+   NODE_ENV=production npm run build
+   ```
+   The compiled bundle (`public/main-f67c3b29dc.js`) is 10331 bytes.
 
-```sh
-npm start
-```
-
-This will build all the source files, watch for changes, and serve them from [`http://localhost:8080`](http://localhost:8080). Make sure you open up the developer tools to view the console output.
-
-To build the source files without watching for changes or starting a local server, run:
-
-```sh
-npm run build
-```
-
-### `development` vs `production` environments
-
-By default the build output is unminified. To generate minified, production-ready files, set `NODE_ENV` to `production`.
-
-```sh
-NODE_ENV=production npm run build
-```
-
-## Features
-
-To validate that this technique works for more than just simple, single-bundle sites, this boilerplate implements several advanced webpack features:
-
-* [Code splitting](https://webpack.js.org/guides/code-splitting/)
-* [Dynamic imports](https://webpack.js.org/guides/code-splitting/#dynamic-imports)
-* [Asset fingerprinting](https://webpack.js.org/guides/caching/)
-
-To see how these feature manifest themselves in the generated files, view the `public` directory after running the build step.
+[actioncable v5.2.1]: https://github.com/rails/rails/tree/v5.2.1/actioncable
+[rails/rails#34177]: https://github.com/rails/rails/pull/34177
