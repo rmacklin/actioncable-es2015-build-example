@@ -1,39 +1,49 @@
-# Webpack ESNext Boilerplate
+This is a demo repository to show the benefits of publishing [actioncable]'s
+source code along with its compiled code.
 
-Webpack configuration and build scripts to deploy ES2015+ code to production (via `<script type="module">`) with legacy browser fallback support via `<script nomodule>`.
+It is based on the [webpack-esnext-boilerplate] repository which demostrates the
+techniques described in Philip Walton's article:
+[Deploying ES2015+ Code in Production Today].
 
-This boilerplate is an implementation of the techniques described in my article: [Deploying ES2015+ Code in Production Today](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/).
+Switching this app from depending on actioncable's compiled code to its source
+code shrinks this app's javascript bundle for modern browsers from `10.6K` to
+`7.4K`.
 
-## Usage
+To verify this result:
 
-To view site locally, run the following command:
+1. Clone the repository:
+   ```sh
+   git clone git@github.com:rmacklin/actioncable-es2015-build-example.git
+   cd actioncable-es2015-build-example
+   ```
 
-```sh
-npm start
-```
+2. Check out the commit which uses the existing actioncable package and build
+   the app:
+   ```sh
+   git checkout d3706b043ef02bb577aa4fbb74377334d9d075e7
+   npm install
+   NODE_ENV=production npm run build
+   ```
+   The compiled bundle (`public/main-5b2c79757f.js`) is 10877 bytes.
 
-This will build all the source files, watch for changes, and serve them from [`http://localhost:8080`](http://localhost:8080). Make sure you open up the developer tools to view the console output.
+3. Check out the commit which uses actioncable's compiled code from
+   [rails/rails#34370] and build the app:
+   ```sh
+   git checkout a38e750e2a8865fb221b89aaa8139f2df1748735
+   npm install
+   NODE_ENV=production npm run build
+   ```
+   The compiled bundle (`public/main-53b26e8172.js`) is 10203 bytes.
 
-To build the source files without watching for changes or starting a local server, run:
+4. Check out the commit which uses actioncable's source code and build the
+   app:
+   ```sh
+   git checkout 3e4aa2cac00e7363144bd2ed4a2e0400e82f3dfa
+   NODE_ENV=production npm run build
+   ```
+   The compiled bundle (`public/main-d63fd732fc.js`) is 7602 bytes.
 
-```sh
-npm run build
-```
-
-### `development` vs `production` environments
-
-By default the build output is unminified. To generate minified, production-ready files, set `NODE_ENV` to `production`.
-
-```sh
-NODE_ENV=production npm run build
-```
-
-## Features
-
-To validate that this technique works for more than just simple, single-bundle sites, this boilerplate implements several advanced webpack features:
-
-* [Code splitting](https://webpack.js.org/guides/code-splitting/)
-* [Dynamic imports](https://webpack.js.org/guides/code-splitting/#dynamic-imports)
-* [Asset fingerprinting](https://webpack.js.org/guides/caching/)
-
-To see how these feature manifest themselves in the generated files, view the `public` directory after running the build step.
+[actioncable]: https://github.com/rails/rails/tree/v5.2.1/actioncable
+[Deploying ES2015+ Code in Production Today]: https://philipwalton.com/articles/deploying-es2015-code-in-production-today/
+[rails/rails#34370]: https://github.com/rails/rails/pull/34370
+[webpack-esnext-boilerplate]: https://github.com/philipwalton/webpack-esnext-boilerplate
