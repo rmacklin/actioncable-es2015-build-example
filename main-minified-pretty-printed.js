@@ -2,14 +2,14 @@ webpackJsonp(["main"], {
     "./app/scripts/main.js": function(t, e, n) {
         "use strict";
         function i(...t) {
-            a.enabled && (t.push(Date.now()),
-            a.logger.log("[ActionCable]", ...t))
+            c.enabled && (t.push(Date.now()),
+            c.logger.log("[ActionCable]", ...t))
         }
-        function o(t) {
+        function s(t) {
             const e = document.head.querySelector(`meta[name='action-cable-${t}']`);
             return e ? e.getAttribute("content") : void 0
         }
-        function s(t) {
+        function o(t) {
             if (t && !/^wss?:/i.test(t)) {
                 const e = document.createElement("a");
                 return e.href = t,
@@ -19,84 +19,34 @@ webpackJsonp(["main"], {
             }
             return t
         }
-        function r(t) {
-            if (null == t) {
-                const e = o("url");
-                t = e || f.default_mount_path
-            }
-            return new R(s(t))
-        }
-        function c() {
-            a.enabled = !0
-        }
-        function l() {
-            a.enabled = !1
-        }
         Object.defineProperty(e, "__esModule", {
             value: !0
         });
-        var h = {};
-        n.d(h, "getConfig", function() {
-            return o
-        }),
-        n.d(h, "createWebSocketURL", function() {
-            return s
-        }),
-        n.d(h, "createConsumer", function() {
-            return r
-        }),
-        n.d(h, "startDebugging", function() {
-            return c
-        }),
-        n.d(h, "stopDebugging", function() {
-            return l
-        }),
-        n.d(h, "Connection", function() {
-            return k
-        }),
-        n.d(h, "ConnectionMonitor", function() {
-            return g
-        }),
-        n.d(h, "Consumer", function() {
-            return R
-        }),
-        n.d(h, "INTERNAL", function() {
-            return f
-        }),
-        n.d(h, "log", function() {
-            return i
-        }),
-        n.d(h, "Subscription", function() {
-            return P
-        }),
-        n.d(h, "Subscriptions", function() {
-            return W
-        });
-        var u = {
+        var r = {
             WebSocket: window.WebSocket
         };
-        const a = {
+        const c = {
             logger: window.console,
             enabled: !1
         }
-          , d = ()=>(new Date).getTime()
-          , p = t=>(d() - t) / 1e3
-          , b = (t,e,n)=>Math.max(e, Math.min(n, t));
-        class m {
+          , l = ()=>(new Date).getTime()
+          , h = t=>(l() - t) / 1e3
+          , a = (t,e,n)=>Math.max(e, Math.min(n, t));
+        class u {
             constructor(t) {
                 this.visibilityDidChange = this.visibilityDidChange.bind(this),
                 this.connection = t,
                 this.reconnectAttempts = 0
             }
             start() {
-                this.isRunning() || (this.startedAt = d(),
+                this.isRunning() || (this.startedAt = l(),
                 delete this.stoppedAt,
                 this.startPolling(),
                 document.addEventListener("visibilitychange", this.visibilityDidChange),
                 i(`ConnectionMonitor started. pollInterval = ${this.getPollInterval()} ms`))
             }
             stop() {
-                this.isRunning() && (this.stoppedAt = d(),
+                this.isRunning() && (this.stoppedAt = l(),
                 this.stopPolling(),
                 document.removeEventListener("visibilitychange", this.visibilityDidChange),
                 i("ConnectionMonitor stopped"))
@@ -105,7 +55,7 @@ webpackJsonp(["main"], {
                 return this.startedAt && !this.stoppedAt
             }
             recordPing() {
-                this.pingedAt = d()
+                this.pingedAt = l()
             }
             recordConnect() {
                 this.reconnectAttempts = 0,
@@ -114,7 +64,7 @@ webpackJsonp(["main"], {
                 i("ConnectionMonitor recorded connect")
             }
             recordDisconnect() {
-                this.disconnectedAt = d(),
+                this.disconnectedAt = l(),
                 i("ConnectionMonitor recorded disconnect")
             }
             startPolling() {
@@ -134,19 +84,19 @@ webpackJsonp(["main"], {
             getPollInterval() {
                 const {min: t, max: e} = this.constructor.pollInterval
                   , n = 5 * Math.log(this.reconnectAttempts + 1);
-                return Math.round(1e3 * b(n, t, e))
+                return Math.round(1e3 * a(n, t, e))
             }
             reconnectIfStale() {
-                this.connectionIsStale() && (i(`ConnectionMonitor detected stale connection. reconnectAttempts = ${this.reconnectAttempts}, pollInterval = ${this.getPollInterval()} ms, time disconnected = ${p(this.disconnectedAt)} s, stale threshold = ${this.constructor.staleThreshold} s`),
+                this.connectionIsStale() && (i(`ConnectionMonitor detected stale connection. reconnectAttempts = ${this.reconnectAttempts}, pollInterval = ${this.getPollInterval()} ms, time disconnected = ${h(this.disconnectedAt)} s, stale threshold = ${this.constructor.staleThreshold} s`),
                 this.reconnectAttempts++,
                 this.disconnectedRecently() ? i("ConnectionMonitor skipping reopening recent disconnect") : (i("ConnectionMonitor reopening"),
                 this.connection.reopen()))
             }
             connectionIsStale() {
-                return p(this.pingedAt ? this.pingedAt : this.startedAt) > this.constructor.staleThreshold
+                return h(this.pingedAt ? this.pingedAt : this.startedAt) > this.constructor.staleThreshold
             }
             disconnectedRecently() {
-                return this.disconnectedAt && p(this.disconnectedAt) < this.constructor.staleThreshold
+                return this.disconnectedAt && h(this.disconnectedAt) < this.constructor.staleThreshold
             }
             visibilityDidChange() {
                 "visible" === document.visibilityState && setTimeout(()=>{
@@ -156,13 +106,13 @@ webpackJsonp(["main"], {
                 , 200)
             }
         }
-        m.pollInterval = {
+        u.pollInterval = {
             min: 3,
             max: 30
         },
-        m.staleThreshold = 6;
-        var g = m
-          , f = {
+        u.staleThreshold = 6;
+        var d = u
+          , p = {
             message_types: {
                 welcome: "welcome",
                 ping: "ping",
@@ -172,15 +122,15 @@ webpackJsonp(["main"], {
             default_mount_path: "/cable",
             protocols: ["actioncable-v1-json", "actioncable-unsupported"]
         };
-        const {message_types: S, protocols: v} = f
-          , y = v.slice(0, v.length - 1)
-          , A = [].indexOf;
-        class w {
+        const {message_types: m, protocols: b} = p
+          , g = b.slice(0, b.length - 1)
+          , f = [].indexOf;
+        class v {
             constructor(t) {
                 this.open = this.open.bind(this),
                 this.consumer = t,
                 this.subscriptions = this.consumer.subscriptions,
-                this.monitor = new g(this),
+                this.monitor = new d(this),
                 this.disconnected = !0
             }
             send(t) {
@@ -189,9 +139,9 @@ webpackJsonp(["main"], {
             }
             open() {
                 return this.isActive() ? (i(`Attempted to open WebSocket, but existing socket is ${this.getState()}`),
-                !1) : (i(`Opening WebSocket, current state is ${this.getState()}, subprotocols: ${v}`),
+                !1) : (i(`Opening WebSocket, current state is ${this.getState()}, subprotocols: ${b}`),
                 this.webSocket && this.uninstallEventHandlers(),
-                this.webSocket = new u.WebSocket(this.consumer.url,v),
+                this.webSocket = new r.WebSocket(this.consumer.url,b),
                 this.installEventHandlers(),
                 this.monitor.start(),
                 !0)
@@ -224,10 +174,10 @@ webpackJsonp(["main"], {
                 return this.isState("open", "connecting")
             }
             isProtocolSupported() {
-                return A.call(y, this.getProtocol()) >= 0
+                return f.call(g, this.getProtocol()) >= 0
             }
             isState(...t) {
-                return A.call(t, this.getState()) >= 0
+                return f.call(t, this.getState()) >= 0
             }
             getState() {
                 for (let t in WebSocket)
@@ -246,21 +196,21 @@ webpackJsonp(["main"], {
                     this.webSocket[`on${t}`] = function() {}
             }
         }
-        w.reopenDelay = 500,
-        w.prototype.events = {
+        v.reopenDelay = 500,
+        v.prototype.events = {
             message(t) {
                 if (!this.isProtocolSupported())
                     return;
                 const {identifier: e, message: n, type: i} = JSON.parse(t.data);
                 switch (i) {
-                case S.welcome:
+                case m.welcome:
                     return this.monitor.recordConnect(),
                     this.subscriptions.reload();
-                case S.ping:
+                case m.ping:
                     return this.monitor.recordPing();
-                case S.confirmation:
+                case m.confirmation:
                     return this.subscriptions.notify(e, "connected");
-                case S.rejection:
+                case m.rejection:
                     return this.subscriptions.reject(e);
                 default:
                     return this.subscriptions.notify(e, "received", n)
@@ -288,8 +238,8 @@ webpackJsonp(["main"], {
                 i("WebSocket onerror event")
             }
         };
-        var k = w;
-        const C = function(t, e) {
+        var S = v;
+        const y = function(t, e) {
             if (null != e)
                 for (let n in e) {
                     const i = e[n];
@@ -297,11 +247,11 @@ webpackJsonp(["main"], {
                 }
             return t
         };
-        class P {
+        class A {
             constructor(t, e={}, n) {
                 this.consumer = t,
                 this.identifier = JSON.stringify(e),
-                C(this, n)
+                y(this, n)
             }
             perform(t, e={}) {
                 return e.action = t,
@@ -318,7 +268,7 @@ webpackJsonp(["main"], {
                 return this.consumer.subscriptions.remove(this)
             }
         }
-        class W {
+        class w {
             constructor(t) {
                 this.consumer = t,
                 this.subscriptions = []
@@ -328,8 +278,8 @@ webpackJsonp(["main"], {
                   , i = "object" == typeof n ? n : {
                     channel: n
                 }
-                  , o = new P(this.consumer,i,e);
-                return this.add(o)
+                  , s = new A(this.consumer,i,e);
+                return this.add(s)
             }
             add(t) {
                 return this.subscriptions.push(t),
@@ -373,11 +323,11 @@ webpackJsonp(["main"], {
                 })
             }
         }
-        class R {
+        class k {
             constructor(t) {
                 this.url = t,
-                this.subscriptions = new W(this),
-                this.connection = new k(this)
+                this.subscriptions = new w(this),
+                this.connection = new S(this)
             }
             send(t) {
                 return this.connection.send(t)
@@ -395,20 +345,14 @@ webpackJsonp(["main"], {
                     return this.connection.open()
             }
         }
-        Object.defineProperties(Object.create(h), {
-            logger: {
-                get: ()=>a.logger,
-                set(t) {
-                    a.logger = t
-                }
-            },
-            WebSocket: {
-                get: ()=>u.WebSocket,
-                set(t) {
-                    u.WebSocket = t
-                }
+        (function(t) {
+            if (null == t) {
+                const e = s("url");
+                t = e || p.default_mount_path
             }
-        }).createConsumer("wss://cable.example.com").subscriptions.create("AppearanceChannel", {})
+            return new k(o(t))
+        }
+        )("wss://cable.example.com").subscriptions.create("AppearanceChannel", {})
     }
 }, ["./app/scripts/main.js"]);
-//# sourceMappingURL=main-c688365013.js.map
+//# sourceMappingURL=main-1b880f4692.js.map
