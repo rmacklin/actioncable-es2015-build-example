@@ -5,19 +5,6 @@ webpackJsonp(["main"],{
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-var action_cable_namespaceObject = {};
-__webpack_require__.d(action_cable_namespaceObject, "getConfig", function() { return getConfig; });
-__webpack_require__.d(action_cable_namespaceObject, "createWebSocketURL", function() { return createWebSocketURL; });
-__webpack_require__.d(action_cable_namespaceObject, "createConsumer", function() { return createConsumer; });
-__webpack_require__.d(action_cable_namespaceObject, "startDebugging", function() { return startDebugging; });
-__webpack_require__.d(action_cable_namespaceObject, "stopDebugging", function() { return stopDebugging; });
-__webpack_require__.d(action_cable_namespaceObject, "Connection", function() { return connection; });
-__webpack_require__.d(action_cable_namespaceObject, "ConnectionMonitor", function() { return connection_monitor; });
-__webpack_require__.d(action_cable_namespaceObject, "Consumer", function() { return consumer_Consumer; });
-__webpack_require__.d(action_cable_namespaceObject, "INTERNAL", function() { return internal; });
-__webpack_require__.d(action_cable_namespaceObject, "log", function() { return log; });
-__webpack_require__.d(action_cable_namespaceObject, "Subscription", function() { return Subscription; });
-__webpack_require__.d(action_cable_namespaceObject, "Subscriptions", function() { return subscriptions_Subscriptions; });
 
 // CONCATENATED MODULE: ./node_modules/actioncable-with-source-code/src/adapters.js
 /* harmony default export */ var adapters = ({
@@ -602,33 +589,10 @@ function stopDebugging() {
 }
 
 
-// CONCATENATED MODULE: ./node_modules/actioncable-with-source-code/src/index.js
-
-
-
-
-/* harmony default export */ var src = (Object.defineProperties(Object.create(action_cable_namespaceObject), {
-  logger: {
-    get() {
-      return logger.logger;
-    },
-    set(value) {
-      logger.logger = value;
-    }
-  },
-  WebSocket: {
-    get() {
-      return adapters.WebSocket;
-    },
-    set(value) {
-      adapters.WebSocket = value;
-    }
-  }
-}));
 // CONCATENATED MODULE: ./app/scripts/main.js
 
 
-let cable = src.createConsumer('wss://cable.example.com');
+let cable = createConsumer('wss://cable.example.com');
 
 cable.subscriptions.create('AppearanceChannel', {
   // normal channel code goes here...
@@ -637,4 +601,4 @@ cable.subscriptions.create('AppearanceChannel', {
 /***/ })
 
 },["./app/scripts/main.js"]);
-//# sourceMappingURL=main-c688365013.js.map
+//# sourceMappingURL=main-1b880f4692.js.map
