@@ -1,4 +1,4 @@
-import ActionCable from 'actioncable';
+import * as ActionCable from 'actioncable';
 
 let cable = ActionCable.createConsumer('wss://cable.example.com');
 
