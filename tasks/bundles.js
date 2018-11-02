@@ -96,7 +96,7 @@ const baseConfig = {
   resolve: {
     alias: {
       actioncable:
-        '@rmacklin/actioncable',
+        '@rmacklin/actioncable/src',
     },
   },
 };
